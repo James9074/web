@@ -48,8 +48,8 @@ export const MessagesPage = () => {
               label={channel.settings?.name.length
                 ? channel.settings?.name
                 : channel.index === 0
-                  ? "Primary"
-                  : `Ch ${channel.index}`}
+                ? "Primary"
+                : `Ch ${channel.index}`}
               active={activeChat === channel.index && chatType === "broadcast"}
               onClick={() => {
                 setChatType("broadcast");
@@ -96,12 +96,13 @@ export const MessagesPage = () => {
       <div className="flex flex-col w-full h-full container mx-auto">
         <PageLayout
           className="flex flex-col h-full"
-          label={`Messages: ${chatType === "broadcast" && currentChannel
-            ? getChannelName(currentChannel)
-            : chatType === "direct" && nodes.get(activeChat)
+          label={`Messages: ${
+            chatType === "broadcast" && currentChannel
+              ? getChannelName(currentChannel)
+              : chatType === "direct" && nodes.get(activeChat)
               ? (nodes.get(activeChat)?.user?.longName ?? nodeHex)
               : "Loading..."
-            }`}
+          }`}
           actions={chatType === "direct"
             ? [
               {

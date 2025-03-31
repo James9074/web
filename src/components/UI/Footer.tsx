@@ -1,8 +1,8 @@
-import { cn } from "@core/utils/cn.ts"
+import { cn } from "@core/utils/cn.ts";
 
 type FooterProps = {
   className?: string;
-}
+};
 
 const Footer = ({ className, ...props }: FooterProps) => {
   return (
@@ -27,6 +27,6 @@ const Footer = ({ className, ...props }: FooterProps) => {
       </p>
     </footer>
   );
-}
+};
 
 export default Footer;

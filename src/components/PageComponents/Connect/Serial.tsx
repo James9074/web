@@ -55,8 +55,9 @@ export const Serial = ({ closeDialog }: TabElementProps) => {
                 await onConnect(port);
               }}
             >
-              {`# ${index} - ${usbVendorId ?? "UNK"} - ${usbProductId ?? "UNK"
-                }`}
+              {`# ${index} - ${usbVendorId ?? "UNK"} - ${
+                usbProductId ?? "UNK"
+              }`}
             </Button>
           );
         })}

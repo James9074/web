@@ -58,7 +58,9 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 const DialogClose = ({
   className,
   ...props
-}: DialogPrimitive.DialogCloseProps & React.RefAttributes<HTMLButtonElement> & { className?: string }) => (
+}: DialogPrimitive.DialogCloseProps & React.RefAttributes<HTMLButtonElement> & {
+  className?: string;
+}) => (
   <DialogPrimitive.Close
     name="close"
     className={cn(
@@ -126,11 +128,11 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 };

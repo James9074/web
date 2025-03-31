@@ -3,7 +3,8 @@ import { useAppStore } from "@core/stores/appStore.ts";
 import { useDevice } from "@core/stores/deviceStore.ts";
 
 export function useRefreshKeysDialog() {
-  const { removeNode, setDialogOpen, clearNodeError, getNodeError } = useDevice();
+  const { removeNode, setDialogOpen, clearNodeError, getNodeError } =
+    useDevice();
   const { activeChat } = useAppStore();
 
   const handleNodeRemove = useCallback(() => {
@@ -12,17 +13,16 @@ export function useRefreshKeysDialog() {
       return;
     }
     clearNodeError(activeChat);
-    handleCloseDialog();;
+    handleCloseDialog();
     return removeNode(nodeWithError?.node);
   }, [activeChat, clearNodeError, setDialogOpen, removeNode]);
 
   const handleCloseDialog = useCallback(() => {
-    setDialogOpen('refreshKeys', false);
-  }, [setDialogOpen])
+    setDialogOpen("refreshKeys", false);
+  }, [setDialogOpen]);
 
   return {
     handleCloseDialog,
-    handleNodeRemove
+    handleNodeRemove,
   };
-
 }

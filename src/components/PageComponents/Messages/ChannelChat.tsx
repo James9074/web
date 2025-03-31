@@ -25,10 +25,9 @@ export const ChannelChat = ({
   const scrollToBottom = useCallback(() => {
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
-      const isNearBottom =
-        scrollContainer.scrollHeight -
-        scrollContainer.scrollTop -
-        scrollContainer.clientHeight <
+      const isNearBottom = scrollContainer.scrollHeight -
+          scrollContainer.scrollTop -
+          scrollContainer.clientHeight <
         100;
 
       if (isNearBottom) {
@@ -63,15 +62,13 @@ export const ChannelChat = ({
               key={message.id}
               message={message}
               sender={nodes.get(message.from)}
-              lastMsgSameUser={
-                index > 0 && messages[index - 1].from === message.from
-              }
+              lastMsgSameUser={index > 0 &&
+                messages[index - 1].from === message.from}
             />
           ))}
           <div ref={messagesEndRef} className="w-full" />
         </div>
       </div>
-
     </div>
   );
 };

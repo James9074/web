@@ -79,7 +79,6 @@ export const subscribeAll = (
     device.setModuleConfig(moduleConfig);
   });
 
-
   connection.events.onMessagePacket.subscribe((messagePacket) => {
     device.addMessage({
       ...messagePacket,
@@ -114,19 +113,24 @@ export const subscribeAll = (
       switch (routingPacket.data.variant.value) {
         case Protobuf.Mesh.Routing_Error.NO_CHANNEL:
           console.error(`Routing Error: ${routingPacket.data.variant.value}`);
-          device.setNodeError(routingPacket.from, Protobuf.Mesh.Routing_Error[routingPacket?.data?.variant?.value]);
+          device.setNodeError(
+            routingPacket.from,
+            Protobuf.Mesh.Routing_Error[routingPacket?.data?.variant?.value],
+          );
           device.setDialogOpen("refreshKeys", true);
           break;
         case Protobuf.Mesh.Routing_Error.PKI_UNKNOWN_PUBKEY:
           console.error(`Routing Error: ${routingPacket.data.variant.value}`);
-          device.setNodeError(routingPacket.from, Protobuf.Mesh.Routing_Error[routingPacket?.data?.variant?.value]);
+          device.setNodeError(
+            routingPacket.from,
+            Protobuf.Mesh.Routing_Error[routingPacket?.data?.variant?.value],
+          );
           device.setDialogOpen("refreshKeys", true);
           break;
         default: {
           break;
         }
       }
-
     }
   });
 };

@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
-import { RefreshKeysDialog } from "./RefreshKeysDialog";
+import { RefreshKeysDialog } from "./RefreshKeysDialog.tsx";
 import { useRefreshKeysDialog } from "./useRefreshKeysDialog.ts";
 
 vi.mock("./useRefreshKeysDialog.ts", () => ({
@@ -24,26 +24,26 @@ describe("RefreshKeysDialog Component", () => {
   });
 
   it("renders the dialog with correct content", () => {
-    render(<RefreshKeysDialog open={true} onOpenChange={onOpenChangeMock} />);
+    render(<RefreshKeysDialog open onOpenChange={onOpenChangeMock} />);
     expect(screen.getByText("Keys Mismatch")).toBeInTheDocument();
     expect(screen.getByText("Request New Keys")).toBeInTheDocument();
     expect(screen.getByText("Dismiss")).toBeInTheDocument();
   });
 
   it("calls handleNodeRemove when 'Request New Keys' button is clicked", () => {
-    render(<RefreshKeysDialog open={true} onOpenChange={onOpenChangeMock} />);
+    render(<RefreshKeysDialog open onOpenChange={onOpenChangeMock} />);
     fireEvent.click(screen.getByText("Request New Keys"));
     expect(handleNodeRemoveMock).toHaveBeenCalled();
   });
 
   it("calls handleCloseDialog when 'Dismiss' button is clicked", () => {
-    render(<RefreshKeysDialog open={true} onOpenChange={onOpenChangeMock} />);
+    render(<RefreshKeysDialog open onOpenChange={onOpenChangeMock} />);
     fireEvent.click(screen.getByText("Dismiss"));
     expect(handleCloseDialogMock).toHaveBeenCalled();
   });
 
   it("calls onOpenChange when dialog close button is clicked", () => {
-    render(<RefreshKeysDialog open={true} onOpenChange={onOpenChangeMock} />);
+    render(<RefreshKeysDialog open onOpenChange={onOpenChangeMock} />);
     fireEvent.click(screen.getByRole("button", { name: /close/i }));
     expect(handleCloseDialogMock).toHaveBeenCalled();
   });

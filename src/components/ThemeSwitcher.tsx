@@ -9,7 +9,7 @@ export default function ThemeSwitcher({
 }: {
   className?: string;
 }) {
-  const { theme, preference, setPreference } = useTheme();
+  const { _theme, preference, setPreference } = useTheme();
 
   const themeIcons = {
     light: <Sun className="size-5" />,
@@ -34,7 +34,7 @@ export default function ThemeSwitcher({
         className,
       )}
       onClick={toggleTheme}
-      aria-description={"Change current theme"}
+      aria-description="Change current theme"
     >
       <span
         data-label

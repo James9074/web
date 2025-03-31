@@ -26,14 +26,25 @@ interface MessageStatus {
 
 const MESSAGE_STATUS: Record<MessageState, MessageStatus> = {
   ack: { state: "ack", displayText: "Message delivered", icon: CheckCircle2 },
-  waiting: { state: "waiting", displayText: "Waiting for delivery", icon: CircleEllipsis },
-  failed: { state: "failed", displayText: "Delivery failed", icon: AlertCircle },
+  waiting: {
+    state: "waiting",
+    displayText: "Waiting for delivery",
+    icon: CircleEllipsis,
+  },
+  failed: {
+    state: "failed",
+    displayText: "Delivery failed",
+    icon: AlertCircle,
+  },
 };
 
 const getMessageStatus = (state: MessageState): MessageStatus =>
-  MESSAGE_STATUS[state] || { state: "failed", displayText: "Unknown error", icon: AlertCircle };
+  MESSAGE_STATUS[state] ||
+  { state: "failed", displayText: "Unknown error", icon: AlertCircle };
 
-const StatusTooltip = ({ status, children }: { status: MessageStatus; children: ReactNode }) => (
+const StatusTooltip = (
+  { status, children }: { status: MessageStatus; children: ReactNode },
+) => (
   <TooltipProvider>
     <Tooltip>
       <TooltipTrigger asChild>{children}</TooltipTrigger>
@@ -50,14 +61,26 @@ const StatusTooltip = ({ status, children }: { status: MessageStatus; children: 
   </TooltipProvider>
 );
 
-const StatusIcon = ({ status, className, ...otherProps }: { status: MessageStatus; className?: string }) => {
+const StatusIcon = (
+  { status, className, ...otherProps }: {
+    status: MessageStatus;
+    className?: string;
+  },
+) => {
   const isFailed = status.state === "failed";
-  const iconClass = cn("text-slate-500 dark:text-slate-400 w-4 h-4 shrink-0", className);
+  const iconClass = cn(
+    "text-slate-500 dark:text-slate-400 w-4 h-4 shrink-0",
+    className,
+  );
   const Icon = status.icon;
 
   return (
     <StatusTooltip status={status}>
-      <Icon className={iconClass} {...otherProps} color={isFailed ? "red" : "currentColor"} />
+      <Icon
+        className={iconClass}
+        {...otherProps}
+        color={isFailed ? "red" : "currentColor"}
+      />
     </StatusTooltip>
   );
 };
@@ -68,16 +91,25 @@ const getMessageTextStyles = (status: MessageStatus) => {
 
   return cn(
     "break-words overflow-hidden",
-    isAcknowledged ? "text-slate-900 dark:text-white" : "text-slate-900 dark:text-slate-400",
+    isAcknowledged
+      ? "text-slate-900 dark:text-white"
+      : "text-slate-900 dark:text-slate-400",
     isFailed && "text-red-500 dark:text-red-500",
   );
 };
 
-const TimeDisplay = ({ date, className }: { date: Date; className?: string }) => (
+const TimeDisplay = (
+  { date, className }: { date: Date; className?: string },
+) => (
   <div className={cn("flex items-center gap-2 shrink-0", className)}>
-    <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">{date.toLocaleDateString()}</span>
     <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-      {date.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })}
+      {date.toLocaleDateString()}
+    </span>
+    <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+      {date.toLocaleTimeString(undefined, {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}
     </span>
   </div>
 );
@@ -94,7 +126,9 @@ export const MessageItem = ({ lastMsgSameUser, message }: MessageProps) => {
   );
 
   const messageUser = message?.from
-    ? getDevices().find((device) => device.nodes.has(message.from))?.nodes.get(message.from)
+    ? getDevices().find((device) => device.nodes.has(message.from))?.nodes.get(
+      message.from,
+    )
     : null;
 
   const messageStatus = getMessageStatus(message.state);
@@ -102,7 +136,13 @@ export const MessageItem = ({ lastMsgSameUser, message }: MessageProps) => {
 
   return (
     <div className="flex flex-col w-full px-4 justify-start">
-      <div className={cn("flex flex-col flex-wrap items-start py-1", messageTextClass, isDeviceUser && "items-end")}>
+      <div
+        className={cn(
+          "flex flex-col flex-wrap items-start py-1",
+          messageTextClass,
+          isDeviceUser && "items-end",
+        )}
+      >
         <div className="flex items-center gap-2 mb-2">
           {!lastMsgSameUser && (
             <div className="flex place-items-center gap-2 mb-1">
@@ -117,7 +157,9 @@ export const MessageItem = ({ lastMsgSameUser, message }: MessageProps) => {
         </div>
         <TimeDisplay date={message.date} />
         <div className="flex place-items-center gap-2 pb-2">
-          <div className={cn(isDeviceUser && "pl-11", messageTextClass)}>{message.message}</div>
+          <div className={cn(isDeviceUser && "pl-11", messageTextClass)}>
+            {message.message}
+          </div>
           <StatusIcon status={messageStatus} />
         </div>
       </div>

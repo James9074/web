@@ -5,7 +5,6 @@ import { Spinner } from "@components/UI/Spinner.tsx";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorPage } from "@components/UI/ErrorPage.tsx";
 
-
 export interface PageLayoutProps {
   label: string;
   noPadding?: boolean;
@@ -65,7 +64,7 @@ export const PageLayout = ({
           className={cn(
             "flex h-full w-full flex-col overflow-y-auto",
             !noPadding && "pl-3 pr-3 ",
-            className
+            className,
           )}
         >
           {children}

@@ -38,7 +38,6 @@ export const MessageInput = ({
   // sends the message to the selected destination
   const sendText = useCallback(
     async (message: string) => {
-
       await connection
         ?.sendText(message, to, true, channel)
         .then((id: number) =>
@@ -91,7 +90,6 @@ export const MessageInput = ({
               setMessageDraft("");
               setMessageBytes(0);
             }
-
           });
         }}
       >
@@ -106,11 +104,17 @@ export const MessageInput = ({
               onChange={handleInputChange}
             />
           </label>
-          <label data-testid="byte-counter" className="flex items-center w-24 p-2 place-content-end">
+          <label
+            data-testid="byte-counter"
+            className="flex items-center w-24 p-2 place-content-end"
+          >
             {messageBytes}/{maxBytes}
           </label>
 
-          <Button type="submit" className="dark:bg-white dark:text-slate-900 dark:hover:bg-slate-400 dark:hover:text-white">
+          <Button
+            type="submit"
+            className="dark:bg-white dark:text-slate-900 dark:hover:bg-slate-400 dark:hover:text-white"
+          >
             <SendIcon size={16} />
           </Button>
         </div>

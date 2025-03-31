@@ -32,13 +32,15 @@ export type DialogVariant =
   | "refreshKeys";
 
 type QueueStatus = {
-  res: number, free: number, maxlen: number
-}
+  res: number;
+  free: number;
+  maxlen: number;
+};
 
 type NodeError = {
   node: number;
   error: string;
-}
+};
 
 export interface Device {
   id: number;
@@ -67,8 +69,8 @@ export interface Device {
   // currentMetrics: Protobuf.DeviceMetrics;
   pendingSettingsChanges: boolean;
   messageDraft: string;
-  queueStatus: QueueStatus,
-  isQueueingMessages: boolean,
+  queueStatus: QueueStatus;
+  isQueueingMessages: boolean;
   dialog: {
     import: boolean;
     QR: boolean;
@@ -82,7 +84,6 @@ export interface Device {
     unsafeRoles: boolean;
     refreshKeys: boolean;
   };
-
 
   setStatus: (status: Types.DeviceStatusEnum) => void;
   setConfig: (config: Protobuf.Config.Config) => void;
@@ -122,7 +123,7 @@ export interface Device {
   setNodeError: (nodeNum: number, error: string) => void;
   clearNodeError: (nodeNum: number) => void;
   getNodeError: (nodeNum: number) => NodeError | undefined;
-  hasNodeError: (nodeNum: number) => boolean
+  hasNodeError: (nodeNum: number) => boolean;
 }
 
 export interface DeviceState {
@@ -163,7 +164,9 @@ export const useDeviceStore = createStore<DeviceState>((set, get) => ({
           activeNode: 0,
           waypoints: [],
           queueStatus: {
-            res: 0, free: 0, maxlen: 0
+            res: 0,
+            free: 0,
+            maxlen: 0,
           },
           isQueueingMessages: false,
           dialog: {
@@ -182,7 +185,6 @@ export const useDeviceStore = createStore<DeviceState>((set, get) => ({
           pendingSettingsChanges: false,
           messageDraft: "",
           nodeErrors: new Map(),
-
 
           setStatus: (status: Types.DeviceStatusEnum) => {
             set(
@@ -337,7 +339,7 @@ export const useDeviceStore = createStore<DeviceState>((set, get) => ({
                   .findIndex(
                     (wmc) =>
                       wmc.payloadVariant.case ===
-                      moduleConfig.payloadVariant.case,
+                        moduleConfig.payloadVariant.case,
                   );
                 if (workingModuleConfigIndex !== -1) {
                   device.workingModuleConfig[workingModuleConfigIndex] =
@@ -673,7 +675,7 @@ export const useDeviceStore = createStore<DeviceState>((set, get) => ({
                 const device = draft.devices.get(id);
                 if (device) {
                   device.queueStatus = status;
-                  device.queueStatus.free >= 10 ? true : false
+                  device.queueStatus.free >= 10 ? true : false;
                 }
               }),
             );
@@ -712,7 +714,6 @@ export const useDeviceStore = createStore<DeviceState>((set, get) => ({
             }
             return device.nodeErrors.has(nodeNum);
           },
-
         });
       }),
     );

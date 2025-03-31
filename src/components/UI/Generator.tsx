@@ -33,89 +33,88 @@ export interface GeneratorProps extends React.BaseHTMLAttributes<HTMLElement> {
   disabled?: boolean;
 }
 
-const Generator =
-  (
-    {
-      type,
-      devicePSKBitCount,
-      id = "pskInput",
-      variant,
-      value,
-      actionButtons,
-      bits = [
-        { text: "256 bit", value: "32", key: "bit256" },
-        { text: "128 bit", value: "16", key: "bit128" },
-        { text: "8 bit", value: "1", key: "bit8" },
-        { text: "Empty", value: "0", key: "empty" },
-      ],
-      selectChange,
-      inputChange,
-      action,
-      disabled,
-      ...props
-    }: GeneratorProps
-  ) => {
-    const inputRef = React.useRef<HTMLInputElement>(null);
+const Generator = (
+  {
+    type,
+    devicePSKBitCount,
+    id = "pskInput",
+    variant,
+    value,
+    actionButtons,
+    bits = [
+      { text: "256 bit", value: "32", key: "bit256" },
+      { text: "128 bit", value: "16", key: "bit128" },
+      { text: "8 bit", value: "1", key: "bit8" },
+      { text: "Empty", value: "0", key: "empty" },
+    ],
+    selectChange,
+    inputChange,
+    action,
+    disabled,
+    ...props
+  }: GeneratorProps,
+) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
-    // Invokes onChange event on the input element when the value changes from the parent component
-    React.useEffect(() => {
-      if (!inputRef.current) return;
-      const setValue = Object.getOwnPropertyDescriptor(
-        HTMLInputElement.prototype,
-        "value",
-      )?.set;
+  // Invokes onChange event on the input element when the value changes from the parent component
+  React.useEffect(() => {
+    if (!inputRef.current) return;
+    const setValue = Object.getOwnPropertyDescriptor(
+      HTMLInputElement.prototype,
+      "value",
+    )?.set;
 
-      if (!setValue) return;
-      inputRef.current.value = "";
-      setValue.call(inputRef.current, value);
-      inputRef.current.dispatchEvent(new Event("input", { bubbles: true }));
-    }, [value]);
-    return (
-      <>
-        <Input
-          type={type}
-          id={id}
-          variant={variant}
-          value={value}
-          onChange={inputChange}
-          action={action}
-          disabled={disabled}
-          ref={inputRef}
-        />
-        <Select
-          value={devicePSKBitCount?.toString()}
-          onValueChange={(e) => selectChange(e)}
-          disabled={disabled}
-        >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {bits.map(({ text, value, key }) => (
-              <SelectItem key={key} value={value}>
-                {text}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <div className="flex ml-4 space-x-4">
-          {actionButtons?.map(({ text, onClick, variant, className }) => (
-            <Button
-              key={text}
-              type="button"
-              onClick={onClick}
-              disabled={disabled}
-              variant={variant}
-              className={className}
-              {...props}
-            >
+    if (!setValue) return;
+    inputRef.current.value = "";
+    setValue.call(inputRef.current, value);
+    inputRef.current.dispatchEvent(new Event("input", { bubbles: true }));
+  }, [value]);
+  return (
+    <>
+      <Input
+        type={type}
+        id={id}
+        variant={variant}
+        value={value}
+        onChange={inputChange}
+        action={action}
+        disabled={disabled}
+        ref={inputRef}
+      />
+      <Select
+        value={devicePSKBitCount?.toString()}
+        onValueChange={(e) => selectChange(e)}
+        disabled={disabled}
+      >
+        <SelectTrigger>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {bits.map(({ text, value, key }) => (
+            <SelectItem key={key} value={value}>
               {text}
-            </Button>
+            </SelectItem>
           ))}
-        </div>
-      </>
-    );
-  }
+        </SelectContent>
+      </Select>
+      <div className="flex ml-4 space-x-4">
+        {actionButtons?.map(({ text, onClick, variant, className }) => (
+          <Button
+            key={text}
+            type="button"
+            onClick={onClick}
+            disabled={disabled}
+            variant={variant}
+            className={className}
+            {...props}
+          >
+            {text}
+          </Button>
+        ))}
+      </div>
+    </>
+  );
+};
 Generator.displayName = "Button";
 
 export { Generator };

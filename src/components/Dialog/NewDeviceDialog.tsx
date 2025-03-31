@@ -87,8 +87,8 @@ const ErrorMessage = ({ missingFeatures }: FeatureErrorProps) => {
             {browserFeatures.length > 0 && (
               <>
                 This connection type requires{" "}
-                {formatFeatureList(browserFeatures)}. Please use a
-                supported browser, like Chrome or Edge.
+                {formatFeatureList(browserFeatures)}. Please use a supported
+                browser, like Chrome or Edge.
               </>
             )}
             {needsSecureContext && (

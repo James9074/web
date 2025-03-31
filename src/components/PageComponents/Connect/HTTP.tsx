@@ -10,7 +10,7 @@ import { randId } from "@core/utils/randId.ts";
 import { MeshDevice } from "@meshtastic/core";
 import { TransportHTTP } from "@meshtastic/transport-http";
 import { useState } from "react";
-import { useForm, useController } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 
 interface FormData {
   ip: string;
@@ -26,10 +26,10 @@ export const HTTP = ({ closeDialog }: TabElementProps) => {
   const { control, handleSubmit, register } = useForm<FormData>({
     defaultValues: {
       ip: ["client.meshtastic.org", "localhost"].includes(
-        window.location.hostname,
-      )
+          globalThis.location.hostname,
+        )
         ? "meshtastic.local"
-        : window.location.host,
+        : globalThis.location.host,
       tls: isURLHTTPS ? true : false,
     },
   });
@@ -74,7 +74,6 @@ export const HTTP = ({ closeDialog }: TabElementProps) => {
             {...register("tls")}
           />
           <Label>Use HTTPS</Label>
-
         </div>
       </div>
       <Button
