@@ -9,13 +9,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@components/UI/Select.tsx";
-import { type FieldValues, useController } from "react-hook-form";
+import { useController, type FieldValues } from "react-hook-form";
 
 export interface SelectFieldProps<T> extends BaseFormBuilderProps<T> {
   type: "select";
   selectChange?: (e: string, name: string) => void;
   validate?: (newValue: string) => Promise<boolean>;
+  defaultValue?: string;
   properties: BaseFormBuilderProps<T>["properties"] & {
+    defaultValue?: T;
     enumValue: {
       [s: string]: string | number;
     };
